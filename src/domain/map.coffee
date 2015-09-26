@@ -15,8 +15,8 @@ class Map
 
     constructor: ->
 
-        @pos = new Matrix(@HORIZONTAL_SIZE, @VERTICAL_SIZE)
-
+        @pos   = new Matrix()
+        @goals = new Matrix()
 
 
     ###*
@@ -56,8 +56,6 @@ class Map
         return hasNeighborCard
 
 
-
-
     ###*
     @method locateCardTo
     @param {RoadCard} card
@@ -69,6 +67,13 @@ class Map
         if @isLocatable(card, hPos, vPos)
 
             @pos.set(hPos, vPos, card)
+
+        else
+            card.upsideDown()
+
+            if @isLocatable(card, hPos, vPos)
+
+                @pos.set(hPos, vPos, card)
 
 
     ###*
