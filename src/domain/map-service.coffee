@@ -1,15 +1,13 @@
 
-RoadLocation  = require './road-location'
-RoadLocations = require './road-locations'
-GoalLocation  = require './goal-location'
-StartRoadCard = require './start-road-card'
+{ Base } = require '../domain-facade'
+
 
 ###*
-@class Card
+@class MapService
+@extends Base
 @module saboteur-domain
 ###
-class Map
-
+class MapService extends Base
 
     GOAL_X        : 7
     GOAL_Y_CENTER : 0
@@ -21,16 +19,20 @@ class Map
     ###
     constructor: (goalCards) ->
 
-        @locations = new RoadLocations()
+        facade = @getFacade()
 
-        startRoadCard = new StartRoadCard()
+        @locations = facade.create('road-location')
 
-        @startLocation = @locations.set(0, 0, startRoadCard)
+        startRoadCard = facade.create('start-road-card')
+
+        @startLocation = facade.create('road-location', x: 0, y: 0, roadCard: startRoadCard)
+
+        @locations.add @startLocation
 
         @goals = [
-            new GoalLocation(@GOAL_ROW, @GOAL_Y_CENTER - @GOAL_Y_DELTA, goalCards[0])
-            new GoalLocation(@GOAL_ROW, @GOAL_Y_CENTER, goalCards[1])
-            new GoalLocation(@GOAL_ROW, @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCards[2])
+            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER - @GOAL_Y_DELTA, goalCard: goalCards[0])
+            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER, goalCard: goalCards[0])
+            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCard: goalCards[0])
         ]
 
 
@@ -77,7 +79,7 @@ class Map
 
         return no if card.isLocatable
 
-        location = new RoadLocation(x, y, card)
+        location = @getFacade().create 'road-location', x: x, y: y, roadCard: card
 
         if options.allowIncompatible
 
@@ -101,7 +103,9 @@ class Map
         if not @isLocatable(card, x, y, options)
             throw new Error 'cannotLocate'
 
-        @locations.set(x, y, card)
+        location = facade.create('road-location', x: x, y: y, roadCard: card)
+
+        @locations.add location
 
         (goalLocation for goalLocation, i in @goals when goalLocation.isNeighbor(x, y))
 
@@ -137,4 +141,4 @@ class Map
             @locations.remove x, y
 
 
-module.exports = Map
+module.exports = MapService

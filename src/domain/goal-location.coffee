@@ -9,16 +9,12 @@ Location = require './location'
 ###
 class GoalLocation extends Location
 
-    ###*
-    @property {Number} x
-    ###
-    ###*
-    @property {Number} y
-    ###
-    ###*
-    @property {RoadCard} goalCard
-    ###
-    constructor: (@x, @y, @goalCard) ->
+    @properties: @withParentProps
+        ###*
+        @property {RoadCard} goalCard
+        ###
+        goalCard: @TYPES.MODEL 'goal-card'
+
 
     ###*
     @method isNeighbor

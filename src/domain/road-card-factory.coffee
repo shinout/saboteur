@@ -1,11 +1,16 @@
 
+{ BaseFactory } = require '../domain-facade'
+
 RoadCard = require './road-card'
 
 ###*
 @class RoadCardFactory
+@extends BaseFactory
 @module saboteur-domain
 ###
-class RoadCardFactory
+class RoadCardFactory extends BaseFactory
+
+    @modelName: 'road-card'
 
     ###*
     @method createHorizontal
@@ -13,7 +18,7 @@ class RoadCardFactory
     ###
     createHorizontal: ->
 
-        new RoadCard(left: on, right: on, upper: off, lower: off, center: on)
+        @createFromObject(left: on, right: on, upper: off, lower: off, center: on)
 
 
     ###*
@@ -22,7 +27,7 @@ class RoadCardFactory
     ###
     createVertical: ->
 
-        new RoadCard(left: off, right: off, upper: on, lower: on, center: on)
+        @createFromObject(left: off, right: off, upper: on, lower: on, center: on)
 
 
     ###*
@@ -31,7 +36,7 @@ class RoadCardFactory
     ###
     createL: ->
 
-        new RoadCard(left: on, right: off, upper: off, lower: on, center: on)
+        @createFromObject(left: on, right: off, upper: off, lower: on, center: on)
 
 
     ###*
@@ -40,7 +45,7 @@ class RoadCardFactory
     ###
     createInvertL: ->
 
-        new RoadCard(left: on, right: off, upper: on, lower: off, center: on)
+        @createFromObject(left: on, right: off, upper: on, lower: off, center: on)
 
 
 
@@ -50,7 +55,7 @@ class RoadCardFactory
     ###
     createCross: ->
 
-        new RoadCard(left: on, right: on, upper: on, lower: on, center: on)
+        @createFromObject(left: on, right: on, upper: on, lower: on, center: on)
 
 
     ###*
@@ -59,7 +64,7 @@ class RoadCardFactory
     ###
     createT: ->
 
-        new RoadCard(left: on, right: on, upper: on, lower: off, center: on)
+        @createFromObject(left: on, right: on, upper: on, lower: off, center: on)
 
 
 
@@ -69,7 +74,7 @@ class RoadCardFactory
     ###
     createWideT: ->
 
-        new RoadCard(left: on, right: off, upper: on, lower: on, center: on)
+        @createFromObject(left: on, right: off, upper: on, lower: on, center: on)
 
 
     ###*
@@ -78,7 +83,7 @@ class RoadCardFactory
     ###
     createLeftDeadEnd: ->
 
-        new RoadCard(left: on, right: off, upper: off, lower: off, center: off)
+        @createFromObject(left: on, right: off, upper: off, lower: off, center: off)
 
 
     ###*
@@ -87,7 +92,7 @@ class RoadCardFactory
     ###
     createUpperDeadEnd: ->
 
-        new RoadCard(left: off, right: off, upper: on, lower: off, center: off)
+        @createFromObject(left: off, right: off, upper: on, lower: off, center: off)
 
 
     ###*
@@ -96,7 +101,7 @@ class RoadCardFactory
     ###
     createHorizontalDeadEnd: ->
 
-        new RoadCard(left: on, right: on, upper: off, lower: off, center: off)
+        @createFromObject(left: on, right: on, upper: off, lower: off, center: off)
 
 
     ###*
@@ -105,7 +110,7 @@ class RoadCardFactory
     ###
     createVerticalDeadEnd: ->
 
-        new RoadCard(left: off, right: off, upper: on, lower: on, center: off)
+        @createFromObject(left: off, right: off, upper: on, lower: on, center: off)
 
 
     ###*
@@ -114,7 +119,7 @@ class RoadCardFactory
     ###
     createLFormedDeadEnd: ->
 
-        new RoadCard(left: on, right: off, upper: off, lower: on, center: off)
+        @createFromObject(left: on, right: off, upper: off, lower: on, center: off)
 
 
     ###*
@@ -123,7 +128,7 @@ class RoadCardFactory
     ###
     createInvertedLFormedDeadEnd: ->
 
-        new RoadCard(left: on, right: off, upper: on, lower: off, center: off)
+        @createFromObject(left: on, right: off, upper: on, lower: off, center: off)
 
 
     ###*
@@ -132,7 +137,7 @@ class RoadCardFactory
     ###
     createTFormedDeadEnd: ->
 
-        new RoadCard(left: on, right: on, upper: on, lower: off, center: off)
+        @createFromObject(left: on, right: on, upper: on, lower: off, center: off)
 
 
     ###*
@@ -141,7 +146,7 @@ class RoadCardFactory
     ###
     createWideTFormedDeadEnd: ->
 
-        new RoadCard(left: on, right: off, upper: on, lower: on, center: off)
+        @createFromObject(left: on, right: off, upper: on, lower: on, center: off)
 
 
     ###*
@@ -150,7 +155,7 @@ class RoadCardFactory
     ###
     createAllDirectionDeadEnd: ->
 
-        new RoadCard(left: on, right: on, upper: on, lower: on, center: off)
+        @createFromObject(left: on, right: on, upper: on, lower: on, center: off)
 
 
 module.exports = RoadCardFactory

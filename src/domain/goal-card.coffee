@@ -9,27 +9,33 @@ Card = require './card'
 ###
 class GoalCard extends Card
 
-    isLocatable: no
+    @properties: @withParentProps
 
-    isDistributable: no
+        ###*
+        @property {Boolean} isGenuineGoal
+        ###
+        isGenuineGoal: @TYPES.BOOLEAN
 
+        ###*
+        @property {Boolean} left
+        ###
+        left: @TYPES.BOOLEAN
 
-    ###*
-    @property {Boolean} isGenuineGoal
-    ###
-    ###*
-    @property {Boolean} left
-    ###
-    ###*
-    @property {Boolean} right
-    ###
-    ###*
-    @property {Boolean} upper
-    ###
-    ###*
-    @property {Boolean} lower
-    ###
-    constructor: (@isGenuineGoal, @left, @right, @upper, @lower) ->
+        ###*
+        @property {Boolean} right
+        ###
+        right: @TYPES.BOOLEAN
+
+        ###*
+        @property {Boolean} upper
+        ###
+        upper: @TYPES.BOOLEAN
+
+        ###*
+        @property {Boolean} lower
+        ###
+        lower: @TYPES.BOOLEAN
+
 
 
     ###*
@@ -38,13 +44,12 @@ class GoalCard extends Card
     ###
     flip: ->
 
-        card = new RoadCard(
+        @getFacade().create 'road-card',
             left   : @left
             right  : @right
             upper  : @upper
             lower  : @lower
             center : on
-        )
 
         card.isRemovable = no
 

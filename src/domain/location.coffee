@@ -1,17 +1,24 @@
 
+{ ValueObject } = require '../domain-facade'
+
 ###*
 @class Location
+@extends ValueObject
 @module saboteur-domain
 ###
-class Location
+class Location extends ValueObject
 
-    ###*
-    @property {Number} x
-    ###
-    ###*
-    @property {Number} y
-    ###
-    constructor: (@x, @y) ->
+    @properties:
+        ###*
+        @property {Number} x
+        ###
+        x: @TYPES.NUMBER
+
+        ###*
+        @property {Number} y
+        ###
+        y: @TYPES.NUMBER
+
 
 
     ###*

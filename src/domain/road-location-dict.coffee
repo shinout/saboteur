@@ -1,29 +1,17 @@
 
-Location = require './location'
-RoadLocation = require './road-location'
+{ BaseDict } = require '../domain-facade'
 
 ###*
-@class RoadLocations
+@class RoadLocationDict
+@extends BaseDict
 @module saboteur-domain
 ###
-class RoadLocations
+class RoadLocationDict extends BaseDict
 
-    constructor: ->
-        @items = {}
+    @itemModelName: 'road-location'
 
 
-    ###*
-    @method set
-    @param {Number} x
-    @param {Number} y
-    @param {RoadCard} roadCard
-    @return {RoadLocation} location
-    ###
-    set: (x, y, roadCard) ->
-
-        item = new RoadLocation(x, y, roadCard)
-        @items[item] = item
-
+    @key: (location) -> location.toString()
 
 
     ###*
@@ -137,4 +125,4 @@ class RoadLocations
         return yes
 
 
-module.exports = Location
+module.exports = RoadLocationDict

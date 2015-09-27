@@ -8,16 +8,12 @@ Location = require './location'
 ###
 class RoadLocation extends Location
 
-    ###*
-    @property {Number} x
-    ###
-    ###*
-    @property {Number} y
-    ###
-    ###*
-    @property {RoadCard} roadCard
-    ###
-    constructor: (@x, @y, @roadCard) ->
+    @properties: @withParentProps
+
+        ###*
+        @property {RoadCard} roadCard
+        ###
+        roadCard: @TYPES.MODEL 'road-card'
 
 
 module.exports = RoadLocation

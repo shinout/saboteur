@@ -9,44 +9,19 @@ Card = require './card'
 ###
 class RoadCard extends Card
 
-    ###*
-    @property {Boolean} isLocatable
-    ###
-    isLocatable: yes
+    @properties: @withParentProps
 
-    ###*
-    @property {Boolean} isDistributable
-    ###
-    isDistributable: yes
+        ###*
+        @property {Boolean} isRemovable
+        ###
+        isRemovable: @TYPES.BOOLEAN
 
 
-    ###*
-    @property {Boolean} isRemovable
-    ###
-    isRemovable: yes
+    constructor: ->
 
+        super
 
-
-    ###*
-    @property {Boolean} left
-    ###
-    ###*
-    @property {Boolean} right
-    ###
-    ###*
-    @property {Boolean} upper
-    ###
-    ###*
-    @property {Boolean} lower
-    ###
-    ###*
-    @property {Boolean} center
-    ###
-    constructor: (options = {}) ->
-
-        { @left, @right, @upper, @lower, @center } = options
-
-
+        @isRemovable = yes
 
 
     ###*

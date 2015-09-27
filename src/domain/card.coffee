@@ -1,23 +1,26 @@
 
 
+{ ValueObject } = require '../domain-facade'
+
+
 ###*
 @class Card
+@extends ValueObject
 @module saboteur-domain
 ###
-class Card
-
-    constructor: ->
+class Card extends ValueObject
 
 
-    ###*
-    @property {Boolean} isLocatable
-    ###
-    isLocatable: no
+    @properties:
+        ###*
+        @property {Boolean} isLocatable
+        ###
+        isLocatable: @TYPES.BOOLEAN
 
-    ###*
-    @property {Boolean} isDistributable
-    ###
-    isDistributable: no
+        ###*
+        @property {Boolean} isDistributable
+        ###
+        isDistributable: @TYPES.BOOLEAN
 
 
 
