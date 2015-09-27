@@ -9,6 +9,8 @@ RoadCard = require './road-card'
 ###
 class StartRoadCard extends RoadCard
 
+    name: 'start'
+
     isLocatable: yes
 
     isDistributable: no

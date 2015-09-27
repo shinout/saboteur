@@ -9,7 +9,7 @@
 ###
 class MapService extends Base
 
-    GOAL_X        : 7
+    GOAL_X        : 8
     GOAL_Y_CENTER : 0
     GOAL_Y_DELTA  : 2
 
@@ -117,7 +117,7 @@ class MapService extends Base
     ###
     flipGoal: (goalLocation) ->
 
-        { goalCard } = goalLocation 
+        { goalCard } = goalLocation
 
         newCard = goalCard.flip()
 

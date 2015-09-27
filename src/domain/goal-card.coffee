@@ -44,7 +44,7 @@ class GoalCard extends Card
     ###
     flip: ->
 
-        @getFacade().create 'road-card',
+        card = @getFacade().create 'road-card',
             left   : @left
             right  : @right
             upper  : @upper

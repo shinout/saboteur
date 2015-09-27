@@ -25,6 +25,24 @@ class RoadCard extends Card
 
 
     ###*
+    @method getAutoName
+    @return {String}
+    ###
+    getAutoName: ->
+
+        numStr = (prefix, bool) -> prefix + if bool then '1' else '0'
+
+        return [
+            numStr 'l', @left
+            numStr 'r', @right
+            numStr 'u', @upper
+            numStr 'd', @lower
+            numStr 'c', @center
+        ].join('-')
+
+
+
+    ###*
     @method upsideDown
     ###
     upsideDown: ->
@@ -36,6 +54,8 @@ class RoadCard extends Card
         lower  = @lower
         @lower = @upper
         @upper = lower
+
+        return @
 
 
 module.exports = RoadCard

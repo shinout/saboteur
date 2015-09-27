@@ -1,8 +1,6 @@
 
 { BaseFactory } = require '../domain-facade'
 
-RoadCard = require './road-card'
-
 ###*
 @class RoadCardFactory
 @extends BaseFactory

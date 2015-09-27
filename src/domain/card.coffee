@@ -13,6 +13,11 @@ class Card extends ValueObject
 
     @properties:
         ###*
+        @property {String} name
+        ###
+        name: @TYPES.STRING
+
+        ###*
         @property {Boolean} isLocatable
         ###
         isLocatable: @TYPES.BOOLEAN
@@ -22,6 +27,12 @@ class Card extends ValueObject
         ###
         isDistributable: @TYPES.BOOLEAN
 
+
+    ###*
+    @method getName
+    @return {String}
+    ###
+    getName: -> @name or @getAutoName()
 
 
 module.exports = Card

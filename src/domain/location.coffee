@@ -40,5 +40,16 @@ class Location extends ValueObject
 
 
 
+    ###*
+    @method isNeighbor
+    @param {Number} x
+    @param {Number} y
+    @return {Boolean}
+    ###
+    isNeighbor: (x, y) ->
+        { abs } = Math
+
+        abs(@x - x) + abs(@y - y) is 1
+
 
 module.exports = Location
