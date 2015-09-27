@@ -1,5 +1,8 @@
 
-Matrix = require './matrix'
+RoadLocation  = require './road-location'
+RoadLocations = require './road-locations'
+GoalLocation  = require './goal-location'
+StartRoadCard = require './start-road-card'
 
 ###*
 @class Card
@@ -7,87 +10,131 @@ Matrix = require './matrix'
 ###
 class Map
 
-    @VERTICAL_SIZE   : 31
-    @HORIZONTAL_SIZE : 51
 
-    # @VERTICAL_CENTER   : 16
-    # @HORIZONTAL_CENTER : 26
+    GOAL_X        : 7
+    GOAL_Y_CENTER : 0
+    GOAL_Y_DELTA  : 2
 
-    constructor: ->
+    ###*
+    @constructor
+    @param {Array(GoalCard)} goalCards
+    ###
+    constructor: (goalCards) ->
 
-        @pos   = new Matrix()
-        @goals = new Matrix()
+        @locations = new RoadLocations()
+
+        startRoadCard = new StartRoadCard()
+
+        @startLocation = @locations.set(0, 0, startRoadCard)
+
+        @goals = [
+            new GoalLocation(@GOAL_ROW, @GOAL_Y_CENTER - @GOAL_Y_DELTA, goalCards[0])
+            new GoalLocation(@GOAL_ROW, @GOAL_Y_CENTER, goalCards[1])
+            new GoalLocation(@GOAL_ROW, @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCards[2])
+        ]
+
+
+    ###*
+    (depth-first-search)
+
+    @method isReachable
+    @return {Boolean}
+    ###
+    isReachable: (x, y) ->
+
+        locationStack = [@startLocation]
+        visited = {}
+        visited[@startLocation] = true
+
+        while locationStack.length
+
+            location = locationStack.pop()
+
+            if location.is(x, y)
+                return true
+
+            continue if not location.roadCard.center
+
+            for nextLocation in @locations.getConnectedNeighbors(location) when not visited[nextLocation]
+
+                visited[nextLocation] = true
+                locationStack.push nextLocation
+
+        return false
+
 
 
     ###*
     @method isLocatable
     @param {RoadCard} card
-    @param {Number} hPos horizontal position
-    @param {Number} vPos vertical position
+    @param {Number} x horizontal position
+    @param {Number} y vertical position
+    @param {Object} [options={}]
+    @param {Boolean} options.allowIncompatible
     @return {Boolean}
     ###
-    isLocatable: (card, hPos, vPos) ->
+    isLocatable: (card, x, y, options = {}) ->
 
         return no if card.isLocatable
 
-        hasNeighborCard = no
+        location = new RoadLocation(x, y, card)
 
-        if leftCard = @pos.get(hPos - 1, vPos)
-            hasNeighborCard = yes
-            return no if leftCard.right is on and card.left is off
-            return no if leftCard.right is off and card.left is on
+        if options.allowIncompatible
 
-        if rightCard = @pos.get(hPos + 1, vPos)
-            hasNeighborCard = yes
-            return no if rightCard.left is on or card.right is off
-            return no if rightCard.left is off or card.right is on
+            return @locations.isConnectedToNeighbors(location)
 
-        if upperCard = @pos.get(hPos, vPos - 1)
-            hasNeighborCard = yes
-            return no if upperCard.lower is on or card.upper is off
-            return no if upperCard.lower is off or card.upper is on
-
-        if lowerCard = @pos.get(hPos, vPos + 1)
-            hasNeighborCard = yes
-            return no if lowerCard.upper is on or card.loewr is off
-            return no if lowerCard.upper is off or card.lower is on
-
-
-        return hasNeighborCard
+        else
+            return @locations.isCompatible(location)
 
 
     ###*
     @method locateCardTo
     @param {RoadCard} card
-    @param {Number} hPos horizontal position
-    @param {Number} vPos vertical position
+    @param {Number} x horizontal position
+    @param {Number} y vertical position
+    @param {Object} [options={}]
+    @param {Boolean} options.allowIncompatible
+    @return {Array(GoalLocation)} goalLocations reached goals
     ###
-    locateCardTo: (card, hPos, vPos) ->
+    locateCardTo: (card, x, y, options) ->
 
-        if @isLocatable(card, hPos, vPos)
+        if not @isLocatable(card, x, y, options)
+            throw new Error 'cannotLocate'
 
-            @pos.set(hPos, vPos, card)
+        @locations.set(x, y, card)
 
-        else
-            card.upsideDown()
+        (goalLocation for goalLocation, i in @goals when goalLocation.isNeighbor(x, y))
 
-            if @isLocatable(card, hPos, vPos)
 
-                @pos.set(hPos, vPos, card)
+    ###*
+    @method flipGoal
+    @param {GoalLocation} goalLocation
+    @return {Boolean} isGenuineGoal
+    ###
+    flipGoal: (goalLocation) ->
+
+        { goalCard } = goalLocation 
+
+        newCard = goalCard.flip()
+
+        if not @isLocatable(newCard, goalLocation.x, goalLocation.y, allowIncompatible: true)
+            throw new Error('cannotFlip')
+
+        return goodCard.isGenuineGoal
 
 
     ###*
     @method remove
-    @param {Number} hPos horizontal position
-    @param {Number} vPos vertical position
+    @param {Number} x horizontal position
+    @param {Number} y vertical position
     ###
-    remove: (hPos, vPos) ->
+    remove: (x, y) ->
 
-        card = @pos.get hPos, vPos
+        card = @locations.getCard x, y
 
         if card.isRemovable
 
-            @pos.remove hPos, vPos
+            @locations.remove x, y
 
 
 module.exports = Map

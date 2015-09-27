@@ -31,6 +31,7 @@ class GoalCard extends Card
     ###
     constructor: (@isGenuineGoal, @left, @right, @upper, @lower) ->
 
+
     ###*
     @method flip
     @return {RoadCard} card

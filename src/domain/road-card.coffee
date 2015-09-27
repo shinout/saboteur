@@ -63,40 +63,4 @@ class RoadCard extends Card
         @upper = lower
 
 
-    ###*
-    @method horizontallyPassable
-    @return {RoadCard}
-    ###
-    horizontallyPassable: ->
-
-        @center and @left and @right
-
-
-    ###*
-    @method verticallyPassable
-    @return {Boolean}
-    ###
-    verticallyPassable: ->
-
-        @center and @upper and @lower
-
-
-    ###*
-    @method leftUpPassible
-    @return {Boolean}
-    ###
-    leftUpPassible: ->
-
-        @center and @left and @upper
-
-
-    ###*
-    @method leftDownPassible
-    @return {Boolean}
-    ###
-    leftDownPassible: ->
-
-        @center and @left and @lower
-
-
 module.exports = RoadCard
