@@ -11,21 +11,22 @@
 class Card extends ValueObject
 
 
+    ###*
+    @property {Boolean} isLocatable
+    ###
+    isLocatable: no
+
+    ###*
+    @property {Boolean} isDistributable
+    ###
+    isDistributable: yes
+
+
     @properties:
         ###*
         @property {String} name
         ###
         name: @TYPES.STRING
-
-        ###*
-        @property {Boolean} isLocatable
-        ###
-        isLocatable: @TYPES.BOOLEAN
-
-        ###*
-        @property {Boolean} isDistributable
-        ###
-        isDistributable: @TYPES.BOOLEAN
 
 
     ###*

@@ -21,7 +21,7 @@ class MapService extends Base
 
         facade = @getFacade()
 
-        @locations = facade.create('road-location')
+        @locations = facade.createDict('road-location')
 
         startRoadCard = facade.create('start-road-card')
 
@@ -31,8 +31,8 @@ class MapService extends Base
 
         @goals = [
             facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER - @GOAL_Y_DELTA, goalCard: goalCards[0])
-            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER, goalCard: goalCards[0])
-            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCard: goalCards[0])
+            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER, goalCard: goalCards[1])
+            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCard: goalCards[2])
         ]
 
 
@@ -77,7 +77,7 @@ class MapService extends Base
     ###
     isLocatable: (card, x, y, options = {}) ->
 
-        return no if card.isLocatable
+        return no if not card.isLocatable
 
         location = @getFacade().create 'road-location', x: x, y: y, roadCard: card
 
@@ -103,7 +103,7 @@ class MapService extends Base
         if not @isLocatable(card, x, y, options)
             throw new Error 'cannotLocate'
 
-        location = facade.create('road-location', x: x, y: y, roadCard: card)
+        location = @getFacade().create('road-location', x: x, y: y, roadCard: card)
 
         @locations.add location
 
@@ -114,31 +114,41 @@ class MapService extends Base
     @method flipGoal
     @param {GoalLocation} goalLocation
     @return {Boolean} isGenuineGoal
+    @return {Object} [options={}]
+    @return {Object} [options.force] forced flipping
     ###
-    flipGoal: (goalLocation) ->
+    flipGoal: (goalLocation, options = {}) ->
 
         { goalCard } = goalLocation
 
         newCard = goalCard.flip()
 
-        if not @isLocatable(newCard, goalLocation.x, goalLocation.y, allowIncompatible: true)
+        if not options.force and not @isLocatable(newCard, goalLocation.x, goalLocation.y, allowIncompatible: true)
             throw new Error('cannotFlip')
 
-        return goodCard.isGenuineGoal
+        return goalCard.isGenuineGoal
 
 
     ###*
     @method remove
     @param {Number} x horizontal position
     @param {Number} y vertical position
+    @return {RoadCard} removed card
     ###
     remove: (x, y) ->
 
         card = @locations.getCard x, y
 
-        if card.isRemovable
+        if not card?
+            throw new Error('noCard')
 
-            @locations.remove x, y
+
+        if not card.isRemovable
+            throw new Error('cannotRemove')
+
+        @locations.removeByXY x, y
+
+        return card
 
 
 module.exports = MapService

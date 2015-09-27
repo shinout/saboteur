@@ -9,19 +9,12 @@ Card = require './card'
 ###
 class RoadCard extends Card
 
-    @properties: @withParentProps
+    isLocatable:  yes
 
-        ###*
-        @property {Boolean} isRemovable
-        ###
-        isRemovable: @TYPES.BOOLEAN
-
-
-    constructor: ->
-
-        super
-
-        @isRemovable = yes
+    ###*
+    @property {Boolean} isRemovable
+    ###
+    isRemovable:  yes
 
 
     ###*

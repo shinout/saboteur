@@ -15,7 +15,7 @@ class RoadLocationDict extends BaseDict
 
 
     ###*
-    @method get
+    @method getByXY
     @param {Number} x
     @param {Number} y
     @return {RoadLocation} location
@@ -25,6 +25,18 @@ class RoadLocationDict extends BaseDict
         key = @itemFactory.createFromObject(x: x, y: y).toString()
 
         @get(key)
+
+
+    ###*
+    @method removeByXY
+    @param {Number} x
+    @param {Number} y
+    ###
+    removeByXY: (x, y) ->
+
+        location = @getByXY(x, y)
+
+        @remove location
 
 
     ###*

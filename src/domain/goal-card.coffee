@@ -9,6 +9,12 @@ Card = require './card'
 ###
 class GoalCard extends Card
 
+    ###*
+    @property {Boolean} isDistributable
+    ###
+    isDistributable: no
+
+
     @properties: @withParentProps
 
         ###*
