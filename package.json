@@ -1,0 +1,20 @@
+{
+  "name": "saboteur",
+  "version": "1.0.0",
+  "description": "saboteur",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shinout/saboteur.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shinout/saboteur/issues"
+  },
+  "author": "SHIN Suzuki",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "base-domain": "1.9.5"
+  }
+}
