@@ -1,6 +1,6 @@
 
 
-{ ValueObject } = require '../domain-facade'
+{ Entity } = require '../domain-facade'
 
 
 ###*
@@ -8,7 +8,7 @@
 @extends ValueObject
 @module saboteur-domain
 ###
-class Card extends ValueObject
+class Card extends Entity
 
 
     ###*

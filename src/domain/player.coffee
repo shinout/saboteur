@@ -4,10 +4,13 @@
 
 ###*
 @class Player
-@extends ValueObject
+@extends Entity
 @module saboteur-domain
 ###
 class Player extends Entity
+
+    @ROLE_MINER    : 'miner'
+    @ROLE_SABOTEUR : 'saboteur'
 
     @properties:
         ###*
@@ -25,6 +28,12 @@ class Player extends Entity
         @property {LockCardDict} locks
         ###
         locks: @TYPES.MODEL_DICT 'lock-card'
+
+
+        ###*
+        @property {String} role
+        ###
+        role: @TYPES.STRING
 
 
     ###*
