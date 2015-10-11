@@ -23,16 +23,16 @@ class MapService extends Base
 
         @locations = facade.createDict('road-location')
 
-        startRoadCard = facade.create('start-road-card')
+        startRoadCard = facade.createModel('start-road-card')
 
-        @startLocation = facade.create('road-location', x: 0, y: 0, roadCard: startRoadCard)
+        @startLocation = facade.createModel('road-location', x: 0, y: 0, roadCard: startRoadCard)
 
         @locations.add @startLocation
 
         @goals = [
-            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER - @GOAL_Y_DELTA, goalCard: goalCards[0])
-            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER, goalCard: goalCards[1])
-            facade.create('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCard: goalCards[2])
+            facade.createModel('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER - @GOAL_Y_DELTA, goalCard: goalCards[0])
+            facade.createModel('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER, goalCard: goalCards[1])
+            facade.createModel('goal-location', x: @GOAL_X, y: @GOAL_Y_CENTER + @GOAL_Y_DELTA, goalCard: goalCards[2])
         ]
 
 
@@ -79,7 +79,7 @@ class MapService extends Base
 
         return no if not card.isLocatable
 
-        location = @getFacade().create 'road-location', x: x, y: y, roadCard: card
+        location = @getFacade().createModel 'road-location', x: x, y: y, roadCard: card
 
         if options.allowIncompatible
 
@@ -103,7 +103,7 @@ class MapService extends Base
         if not @isLocatable(card, x, y, options)
             throw new Error 'cannotLocate'
 
-        location = @getFacade().create('road-location', x: x, y: y, roadCard: card)
+        location = @getFacade().createModel('road-location', x: x, y: y, roadCard: card)
 
         @locations.add location
 
